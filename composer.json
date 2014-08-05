@@ -1,6 +1,6 @@
 {
-    "name": "nitecon/zfcuser-ldap",
-    "description": "Zend Framework 2 ZfcUser LDAP Authentication",
+    "name": "marks12/zfcuser-ldap",
+    "description": "Zend Framework 2 ZfcUser LDAP Authentication. this is unofficial version. Please use Nitecon/zfcuser-ldap",
     "type": "library",
     "keywords": ["zf2","zfcuser","ldap"],
     "homepage": "https://github.com/Nitecon/zfcuser-ldap.git",
@@ -16,7 +16,7 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.*",
-        "zf-commons/zfc-user": "dev-master*"
+        "zf-commons/zfc-user": "dev-master"
     },
     "require-dev": {
 	"squizlabs/php_codesniffer":          "1.4.*",
