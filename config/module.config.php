@@ -9,21 +9,18 @@
  * the file LICENSE.txt that was distributed with this source code.
  */
 return array(
-    'service_manager' => array(
-        'invokables' => array(
-            'ZfcUserLdap\Adapter\Ldap' => 'ZfcUserLdap\Adapter\Ldap',
-            'ZfcUserLdap\Authentication\Adapter\LdapAuth' => 'ZfcUserLdap\Authentication\Adapter\LdapAuth',
-        ),
-        'aliases' => array(
-        ),
-        'factories' => array(
-            'ZfcUserLdap\Config' => 'ZfcUserLdap\ServiceFactory\ZfcUserLdapConfigFactory',
-            'ZfcUserLdap\LdapAdapter' => 'ZfcUserLdap\ServiceFactory\LdapAdapterFactory',
-            'ZfcUserLdap\LdapConfig' => 'ZfcUserLdap\ServiceFactory\LdapConfigFactory',
-            'ZfcUserLdap\Logger' => 'ZfcUserLdap\ServiceFactory\LoggerAdapterFactory',
-            'ZfcUserLdap\Mapper' => 'ZfcUserLdap\ServiceFactory\UserMapperFactory',
-            'ZfcUserLdap\Provider\Identity\LdapIdentityProvider' => 'ZfcUserLdap\Service\LdapIdentityProviderFactory',
-            'ZfcUserLdap\ZfcRbacIdentityProvider' => 'ZfcUserLdap\ServiceFactory\ZfcRbacIdentityProviderFactory',
-        )
-    ),
+		'doctrine' => array(
+				'driver' => array(
+						'zfcuserldap_entities' => array(
+								'class' =>'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+								'cache' => 'array',
+								'paths' => array(__DIR__ . '/../src/ZfcUserLdap/Entity'),
+						),
+						'orm_default' => array(
+								'drivers' => array(
+										'ZfcUserLdap\Entity' => 'zfcuserldap_entities',
+								),
+						),
+				),
+		),
 );

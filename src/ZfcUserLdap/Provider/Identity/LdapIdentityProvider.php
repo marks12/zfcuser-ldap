@@ -5,73 +5,104 @@
  *
  * For the full copyright and license information, please view
  * the file LICENSE.txt that was distributed with this source code.
- *
+ * 
  * @author Will Hattingh <w.hattingh@nitecon.com>
  *
- *
+ * 
  */
-
 namespace ZfcUserLdap\Provider\Identity;
-
 use BjyAuthorize\Exception\InvalidRoleException;
 use Zend\Permissions\Acl\Role\RoleInterface;
+use Zend\Session\Container;
+use ZfcUserLdap\Entity\Role;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-class LdapIdentityProvider implements \BjyAuthorize\Provider\Identity\ProviderInterface
-{
 
+class LdapIdentityProvider implements \BjyAuthorize\Provider\Identity\ProviderInterface, ServiceLocatorAwareInterface{
     /**
-     * @var \Zend\Authentication\AuthenticationService
+     * @var User
      */
-    protected $authService;
+    protected $userService;
 
     /**
      * @var string|\Zend\Permissions\Acl\Role\RoleInterface
      */
     protected $defaultRole;
+    
     protected $config;
-    protected $bjyConfig;
-
     /**
      * @param \ZfcUser\Service\User    $userService
-     * @param array $config;
-     * @param array $bjyConfig;
      */
-    public function __construct($authService, array $config, array $bjyConfig)
-    {
 
-        $this->authService = $authService;
+    protected $services;
+    
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
+    {
+    	$this->services = $serviceLocator;
+    }
+    
+    public function getServiceLocator()
+    {
+    	return $this->services;
+    }
+    
+    
+    public function __construct($userService,$config)
+    {
+        $this->userService = $userService;
         $this->config = $config;
-        $this->bjyConfig = $bjyConfig;
     }
 
+    
+    
     /**
      * {@inheritDoc}
      */
     public function getIdentityRoles()
     {
-        $definedRoles = $this->bjyConfig['role_providers']['BjyAuthorize\Provider\Role\Config']['user']['children'];
-        $roleKey = $this->config['identity_providers']['ldap_role_key'];
-
-
-        if (!$this->authService->hasIdentity()) {
+        $authService = $this->userService;
+//         $definedRoles = $this->config['role_providers']['BjyAuthorize\Provider\Role\Config']['user']['children'];
+        $roleKey = $this->config['ldap_role_key'];
+        
+//         $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        
+//         $definedRoles = $em->getRepository("ZfcUserLdap\Entity\Role")->findAll();
+        
+//         var_dump($role);
+//         exit();
+        
+        if (! $authService->getAuthService()->hasIdentity()) {
             return array($this->getDefaultRole());
         }
-        $rawObj = $this->authService->getIdentity()->getRoles();
-        $data = @unserialize($rawObj);
-        if ($data === false) {
+        $session = new Container('ZfcUserLdap');
+        if (!$session->offsetExists('ldapObj')){
             return array($this->getDefaultRole());
         }
-        $user = unserialize($rawObj);
-        if (is_null($user) || !is_array($user)) {
-            return array($this->getDefaultRole());
-        }
-        $roles = array('user');
-        foreach ($user[$roleKey] as $role) {
-            if (isset($definedRoles[$role])) {
-                $roles[] = $role;
-            }
+        
+//         var_dump($roleKey);
+        
+        $user = $session->offsetGet('ldapObj');
+        $roles     = array();
+        
+//         var_dump($user);
+//         var_dump($definedRoles);
+//         exit();
+        
+        foreach ($user->getRoles() as $role) {
+//             if (isset($definedRoles[$role]))
+                $roles[] = $role->getRoleId();
         }
         return $roles;
+//         $session = new Container('ZfcUserLdap');
+//         $user = $session->offsetGet('ldapObj');
+// 		$em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+// // 		$Roles = $em->getRepository("ZfcUserLdap\Entity\User")->find();
+// // 		var_dump($authService->getAuthService()->getIdentity());
+// 		var_dump($user);
+		
+// 		exit();
+        
     }
 
     /**
@@ -89,7 +120,7 @@ class LdapIdentityProvider implements \BjyAuthorize\Provider\Identity\ProviderIn
      */
     public function setDefaultRole($defaultRole)
     {
-        if (!($defaultRole instanceof RoleInterface || is_string($defaultRole))) {
+        if (! ($defaultRole instanceof RoleInterface || is_string($defaultRole))) {
             throw InvalidRoleException::invalidRoleInstance($defaultRole);
         }
 

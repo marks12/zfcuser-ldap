@@ -41,6 +41,10 @@ class LdapAuth extends AbstractAdapter implements ServiceManagerAwareInterface
 
     public function authenticate(AuthEvent $e)
     {
+    	var_dump('555');
+    	exit();
+    	
+    	
         $userObject = null;
         $zulConfig = $this->serviceManager->get('ZfcUserLdap\Config');
 
@@ -81,6 +85,9 @@ class LdapAuth extends AbstractAdapter implements ServiceManagerAwareInterface
         // Create the user object entity via the LDAP object
         $userObject = $this->getMapper()->newEntity($ldapObj);
 
+        var_dump($zulConfig['auto_insertion']['enabled']);
+        exit('34');
+        
         // If auto insertion is on, we will check against DB for existing user,
         // then will create or update user depending on results and settings
         if ($zulConfig['auto_insertion']['enabled']) {
@@ -91,6 +98,9 @@ class LdapAuth extends AbstractAdapter implements ServiceManagerAwareInterface
                 $userDbObject = $this->getMapper()->findByUsername($identity);
             }
 
+            var_dump($userDbObject);
+            exit('35');
+            
             if ($userDbObject === false) {
                 $userObject = $this->getMapper()->updateDb($ldapObj, null);
             } elseif ($zulConfig['auto_insertion']['auto_update']) {

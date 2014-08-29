@@ -1,0 +1,123 @@
+<?php
+
+
+define('IPO_AD_group', 'U.S.ISadmins'); //Администраторы системы управления инвентаризацией ПО http://inventpo.sb
+
+return array(
+		// Your other stuff
+		'bjyauthorize' => array(
+				// Using the authentication identity provider, which basically reads the roles from the auth service's identity
+				'identity_provider' => 'ZfcUserLdap\Provider\Identity\LdapIdentityProvider',
+				'ldap_role_key' => 'memberof',
+// 				'role_providers' => array(
+// // 						/* here, 'guest' and 'user are defined as top-level roles, with
+// // 						 * 'posixAccount' inheriting from user
+// // */
+// 						'BjyAuthorize\Provider\Role\Config' => array(
+// 								'guest' => array(),
+// 								'user' => array(
+// 									'children'=>array(
+// 										IPO_AD_group => array(),
+// 									),
+// 								),
+// 						),
+						
+// 				),
+				
+		        'role_providers'        => array(
+		            // using an object repository (entity repository) to load all roles into our ACL
+		            'BjyAuthorize\Provider\Role\ObjectRepositoryProvider' => array(
+		                'object_manager'    => 'doctrine.entitymanager.orm_default',
+		                'role_entity_class' => 'ZfcUserLdap\Entity\Role',
+		            ),
+		            'BjyAuthorize\Provider\Role\Config' => array(
+		            	
+		            ),
+		        ),
+				'guards' => array(
+						'BjyAuthorize\Guard\Route' => array(
+								array('route' => 'zfcuser', 'roles' => array('guest','user')),
+								array('route' => 'zfcuser/logout', 'roles' => array('user')),
+								array('route' => 'zfcuser/login', 'roles' => array('guest')),
+								array('route' => 'zfcuser/register', 'roles' => array('guest')),
+								array('route' => 'zfcuser/user', 'roles' => array('user',IPO_AD_group)),
+								// Below is the default index action used by the ZendSkeletonApplication
+								array('route' => 'home', 'roles' => array('guest', 'user')),
+								array('route' => 'about', 'roles' => array('guest', IPO_AD_group)),
+						),
+				)
+		),
+		// More of your other stuff
+);
+
+
+// return array(
+//     'bjyauthorize' => array(
+
+
+//         'default_role' => 'guest',
+
+
+//         'identity_provider' => 'BjyAuthorize\Provider\Identity\AuthenticationIdentityProvider',
+
+
+//         'authenticated_role' => 'user',
+
+
+//         'role_providers'        => array(
+//             // using an object repository (entity repository) to load all roles into our ACL
+//             'BjyAuthorize\Provider\Role\ObjectRepositoryProvider' => array(
+//                 'object_manager'    => 'doctrine.entitymanager.orm_default',
+//                 'role_entity_class' => 'Tsvuser\Entity\Role',
+//             ),
+//         ),
+
+//         'guards' => array(
+//             /* If this guard is specified here (i.e. it is enabled), it will block
+//              * access to all controllers and actions unless they are specified here.
+//              * You may omit the 'action' index to allow access to the entire controller
+//              */
+//             'BjyAuthorize\Guard\Controller' => array(
+//                 array(
+//                     'controller' => 'zfcuser',
+//                     'action' => array('index'),
+//                     'roles' => array('guest', 'user','G.ISAdmin'),
+//                 ),
+//                 array(
+//                     'controller' => 'zfcuser',
+//                     'action' => array('login', 'authenticate', 'register'),
+//                     'roles' => array('guest'),
+//                 ),
+//                 array(
+//                     'controller' => 'zfcuser',
+//                     'action' => array('logout'),
+//                     'roles' => array('user','G.ISAdmin'),
+//                 ),
+
+//                 array(
+//                 	'controller' => 'Application\Controller\Index', 
+//                 	'roles' => array()
+// 	            ),
+
+// //                 array(
+// //                     'controller' => 'MyBlog\Controller\BlogPost',
+// //                     'action' => array('index', 'view'),
+// //                     'roles' => array('guest', 'user'),
+// //                 ),
+
+//                 array(
+//                     'controller' => 'ZfcAdmin\Controller\AdminController',
+//                     'action' => array('index'),
+//                     'roles' => array('G.ISAdmin'),
+//                 ),
+//            		array(
+//            				'controller' => 'zfcuseradmin',
+//            				'action' => array('list','index','create'),
+//            				'roles' => array('G.ISAdmin'),
+//            		),
+            		
+//             ),
+//         ),
+//     ),
+// );
+
