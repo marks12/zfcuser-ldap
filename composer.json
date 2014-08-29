@@ -4,7 +4,7 @@
     "type": "library",
     "keywords": ["zf2","zfcuser","ldap"],
     "homepage": "https://github.com/marks12/zfcuser-ldap.git",
-    "license": "New BSD License",
+    "license": "BSD-4-Clause",
     "authors": [
         {
             "name": "Will Hattingh",
@@ -16,7 +16,8 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.*",
-        "zf-commons/zfc-user": "*"
+        "zf-commons/zfc-user": "2.0.*",
+        "bjyoungblood/bjy-authorize": "1.5.*"
     },
     "require-dev": {
 	"squizlabs/php_codesniffer":          "1.4.*",
