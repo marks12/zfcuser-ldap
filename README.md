@@ -87,6 +87,17 @@ identity provider as you had it before.
 
 ## Setup
 
+Add following modules in your module/application.config.php:
+
+    	'DoctrineModule',
+    	'DoctrineORMModule',
+    	'BjyProfiler',
+    	'ZfcBase',
+    	'ZfcUser',
+    	'BjyAuthorize',
+    	'ZfcUserLdap',
+    	
+
 The following steps are necessary to get this module working
 
   1. Run `php composer.phar require nitecon/zfcuser-ldap:1.1.0`
