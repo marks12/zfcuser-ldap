@@ -5,7 +5,7 @@ ZfcUserLdap
 Travis added
 
 
-[![Build Status](https://travis-ci.org/Nitecon/zfcuser-ldap.png?branch=master)](https://travis-ci.org/Nitecon/zfcuser-ldap) [![Latest Stable Version](https://poser.pugx.org/nitecon/zfcuser-ldap/v/stable.png)](https://packagist.org/packages/nitecon/zfcuser-ldap) [![Coverage Status](https://coveralls.io/repos/Nitecon/zfcuser-ldap/badge.png?branch=master)](https://coveralls.io/r/Nitecon/zfcuser-ldap?branch=master)
+[![Build Status](https://travis-ci.org/marks12/zfcuser-ldap.svg?branch=master)](https://travis-ci.org/marks12/zfcuser-ldap.svg) [![Latest Stable Version](https://poser.pugx.org/nitecon/zfcuser-ldap/v/stable.png)](https://packagist.org/packages/nitecon/zfcuser-ldap) [![Coverage Status](https://coveralls.io/repos/Nitecon/zfcuser-ldap/badge.png?branch=master)](https://coveralls.io/r/Nitecon/zfcuser-ldap?branch=master)
 
 Zend Framework ZfcUser Extension to provide LDAP Authentication
 
