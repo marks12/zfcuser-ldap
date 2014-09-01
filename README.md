@@ -2,6 +2,7 @@ ZfcUserLdap
 ================
 
 !Attention - this is unofficial version, please use Nitecon/zfcuser-ldap
+Travice added
 
 
 [![Build Status](https://travis-ci.org/Nitecon/zfcuser-ldap.png?branch=master)](https://travis-ci.org/Nitecon/zfcuser-ldap) [![Latest Stable Version](https://poser.pugx.org/nitecon/zfcuser-ldap/v/stable.png)](https://packagist.org/packages/nitecon/zfcuser-ldap) [![Coverage Status](https://coveralls.io/repos/Nitecon/zfcuser-ldap/badge.png?branch=master)](https://coveralls.io/r/Nitecon/zfcuser-ldap?branch=master)
