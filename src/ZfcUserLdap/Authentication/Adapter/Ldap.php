@@ -85,9 +85,7 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
 //         exit();
         
 
-        $em = $this
-        ->getServiceManager()
-        ->get('Doctrine\ORM\EntityManager');
+        $em = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
         
         
         $validator = new \Zend\Validator\EmailAddress();
