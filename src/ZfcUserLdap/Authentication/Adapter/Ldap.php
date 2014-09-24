@@ -83,10 +83,8 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
 //         var_dump($zulConfig);
 //         var_dump($zulConfig['auto_insertion']['enabled']);
 //         exit();
-        
-
+		
         $em = $this->getServiceManager()->get('doctrine.entitymanager.orm_default');
-              
         
         $validator = new \Zend\Validator\EmailAddress();
         if ($validator->isValid($identity)) {
@@ -111,15 +109,15 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
                 return false;
             }
         }
-//         if ($auth = $this->getMapper()->authenticate($userObject->getUsername(), $credential) !== TRUE) {
-// //         	var_dump($this->getMapper()->authenticate($userObject->getUsername(), $credential));
-// //         	exit();
-//             // Password does not match
-//             $e->setCode(AuthenticationResult::FAILURE_CREDENTIAL_INVALID)
-//                     ->setMessages(array($auth));
-//             $this->setSatisfied(false);
-//             return false;
-//         }
+        if ($auth = $this->getMapper()->authenticate($userObject->getUsername(), $credential) !== TRUE) {
+//         	var_dump($this->getMapper()->authenticate($userObject->getUsername(), $credential));
+//         	exit();
+            // Password does not match
+            $e->setCode(AuthenticationResult::FAILURE_CREDENTIAL_INVALID)
+                    ->setMessages(array($auth));
+            $this->setSatisfied(false);
+            return false;
+        }
 
 
 
@@ -187,7 +185,7 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
         				$exists_roles[] = $v;
         		
         		/**
-        		 * Удаляем все роли, которые пропали из мемберофф
+        		 * пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         		 */
         		foreach ($userDbObject->getRolesObj() as $role1)
         		{
@@ -198,7 +196,7 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
         		}
         		
         		/**
-        		 * Добавляем роли, которые появились для данного пользователя
+        		 * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         		 */
         		
         		foreach ($userObject->getMemberof() as $k=>$v)
@@ -213,7 +211,7 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
         		}
         		
         		/**
-        		 * Обновляем ФИО, Email
+        		 * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ, Email
         		 */
         		$userDbObject->setDisplayName($userObject->getDisplayName());
         		$userDbObject->setEmail($userObject->getEmail());

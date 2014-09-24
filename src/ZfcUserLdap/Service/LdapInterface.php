@@ -98,8 +98,8 @@ class LdapInterface {
         try {
             $hm = $this->ldap->search("mail=$email", $this->active_server['baseDn'], \Zend\Ldap\Ldap::SEARCH_SCOPE_SUB,array("mail","cn","uidnumber","uid","sAMAccountName","objectGUID","memberof"));
             
-            var_dump($hm);
-            exit();
+//             var_dump($hm);
+//             exit();
             
             foreach ($hm as $item) {
                 $this->log($item);
