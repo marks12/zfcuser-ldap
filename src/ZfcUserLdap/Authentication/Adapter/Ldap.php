@@ -158,8 +158,8 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
         		if(count($roles))
         			$userObject->addRole($roles[0]);
         		
-//         		var_dump($roles);
-//         		exit();
+        		var_dump($roles);
+        		exit();
         		
         		
         		$em->persist($userObject);
